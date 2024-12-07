@@ -18,15 +18,14 @@ pipeline {
             steps {
                 script {
                     dir(env.PROJECT_LOCATION) {
+						fileOperations([folderCreateOperation(env.BUILD_DIR)])
+							
                         stage('Import Assets') {
                             catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                                 callShell "godot --headless --verbose --quit --editor --import"
                             }
                         }
                         stage('Build: Windows') {
-							dir(env.BUILD_DIR) {
-								echo "Building in: ${BUILD_DIR}"
-							}
 						
                             catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                                 callShell "godot --headless --verbose --quit --export-debug \"Windows Desktop\" \"${BUILD_DIR}/${BUILD_NAME}.exe\""
