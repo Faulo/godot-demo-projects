@@ -24,6 +24,10 @@ pipeline {
                             }
                         }
                         stage('Build: Windows') {
+							dir(env.BUILD_DIR) {
+								echo "Building in: ${BUILD_DIR}"
+							}
+						
                             catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                                 callShell "godot --headless --verbose --quit --export-debug \"Windows Desktop\" \"${BUILD_DIR}/${BUILD_NAME}.exe\""
                             }
