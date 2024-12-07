@@ -9,6 +9,10 @@ pipeline {
         BUILD_NAME = 'Truck Town'
 		BUILD_DIR = 'build/windows'
     }
+	options {
+		disableConcurrentBuilds()
+		disableResume()
+	}
     stages {
         stage('Setup') {
             steps {
