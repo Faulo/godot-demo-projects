@@ -66,7 +66,7 @@ pipeline {
 							fileOperations([folderCreateOperation(".builds/${BUILD_PLATFORM}")])
 						
 							catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-								callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \".builds/${BUILD_PLATFORM}/${BUILD_NAME}\""
+								callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \".builds/${BUILD_PLATFORM}/${BUILD_NAME}.html\""
 							}
 							
 							zip(zipFile: "${BUILD_HOST} - ${BUILD_NAME} - ${BUILD_PLATFORM}.zip", dir: ".builds/${BUILD_PLATFORM}", archive: true, overwrite: true)
@@ -129,7 +129,7 @@ pipeline {
 							fileOperations([folderCreateOperation(".builds/${BUILD_PLATFORM}")])
 						
                             catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-                                callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \".builds/${BUILD_PLATFORM}/${BUILD_NAME}\""
+                                callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \".builds/${BUILD_PLATFORM}/${BUILD_NAME}.html\""
                             }
                             
                             zip(zipFile: "${BUILD_HOST} - ${BUILD_NAME} - ${BUILD_PLATFORM}.zip", dir: ".builds/${BUILD_PLATFORM}", archive: true, overwrite: true)
