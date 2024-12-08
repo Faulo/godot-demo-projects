@@ -55,10 +55,10 @@ pipeline {
 							fileOperations([folderCreateOperation(".builds/${BUILD_PLATFORM}")])
 						
 							catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-								callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \".builds/${BUILD_PLATFORM}/${BUILD_NAME}.zip\""
+								callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \".builds/${BUILD_PLATFORM}/${BUILD_HOST} - ${BUILD_NAME} - ${BUILD_PLATFORM}.zip\""
 							}
 							
-							zip(zipFile: "${BUILD_HOST} - ${BUILD_NAME} - ${BUILD_PLATFORM}.zip", dir: ".builds/${BUILD_PLATFORM}", archive: true, overwrite: true)
+							archiveArtifacts artifacts: '.builds/${BUILD_PLATFORM}/*.zip', fingerprint: true
 						}
 						stage('Build: WebGL') {
 							env.BUILD_PLATFORM = "Web"
