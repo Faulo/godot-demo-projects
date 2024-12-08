@@ -14,8 +14,8 @@ pipeline {
     stages {
         stage('Linux Host') {
 			agent {
-				docker {
-					image 'barichello/godot-ci:4.3'
+				dockerfile {
+					filename '.jenkins/Dockerfile'					
 				}
 			}
 			environment {
