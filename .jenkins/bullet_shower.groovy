@@ -1,5 +1,9 @@
 pipeline {
-    agent none
+	agent {
+		dockerfile {
+			filename '.jenkins/Dockerfile'					
+		}
+	}
     environment {
         GODOT_VERSION = '4.2'
         PROJECT_LOCATION = '2d/bullet_shower'
@@ -11,11 +15,6 @@ pipeline {
 	}
     stages {
         stage('Setup Agent') {
-			agent {
-				dockerfile {
-					filename '.jenkins/Dockerfile'					
-				}
-			}
             steps {
                 script {
                     dir(env.PROJECT_LOCATION) {		
