@@ -77,7 +77,7 @@ pipeline {
 								keepAll: false,
 								reportDir: ".builds/${BUILD_PLATFORM}",
 								reportFiles: "${BUILD_NAME}.html",
-								reportName: '${BUILD_HOST} - WebGL Build',
+								reportName: "${BUILD_HOST} - WebGL Build",
 								reportTitles: '',
 								useWrapperFileDirectly: true
 							])
@@ -151,7 +151,7 @@ pipeline {
 								keepAll: false,
 								reportDir: ".builds/${BUILD_PLATFORM}",
 								reportFiles: "${BUILD_NAME}.html",
-								reportName: '${BUILD_HOST} - WebGL Build',
+								reportName: "${BUILD_HOST} - WebGL Build",
 								reportTitles: '',
 								useWrapperFileDirectly: true
 							])
