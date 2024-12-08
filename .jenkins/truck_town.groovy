@@ -17,7 +17,7 @@ pipeline {
 				label 'linux'
 			}
 			environment {
-				BUILD_HOST = 'linux'
+				BUILD_HOST = 'Linux'
 			}
             steps {
                 script {
