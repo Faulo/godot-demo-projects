@@ -1,12 +1,10 @@
 pipeline {
-    agent {
-        label 'windows'
-    }
+    agent none
     environment {
         GODOT_IMAGE = 'barichello/godot-ci'
         GODOT_VERSION = '4.3'
-        PROJECT_LOCATION = '2d/platformer'
-        BUILD_NAME = 'Platformer'
+        PROJECT_LOCATION = '3d/truck_town'
+        BUILD_NAME = 'Truck Town'
 		BUILD_DIR = 'build'
     }
 	options {
@@ -14,7 +12,10 @@ pipeline {
 		disableResume()
 	}
     stages {
-        stage('Setup') {
+        stage('Windows Host') {
+			agent {
+				label 'windows'
+			}
             steps {
                 script {
                     dir(env.PROJECT_LOCATION) {							
