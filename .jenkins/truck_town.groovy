@@ -14,7 +14,9 @@ pipeline {
     stages {
         stage('Linux Host') {
 			agent {
-				label 'linux'
+				docker {
+					image: 'barichello/godot-ci:4.3'
+				}
 			}
 			environment {
 				BUILD_HOST = 'Linux'
@@ -22,56 +24,54 @@ pipeline {
             steps {
                 script {
                     dir(env.PROJECT_LOCATION) {		
-						docker.image("$GODOT_IMAGE:$GODOT_VERSION").inside() {
-							stage('Import Assets') {
-								catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-									callShell "godot --headless --verbose --quit --editor --import"
-								}
+						stage('Import Assets') {
+							catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+								callShell "godot --headless --verbose --quit --editor --import"
 							}
-							stage('Build: Windows') {
-								env.BUILD_PLATFORM = "Windows Desktop"
-								
-								fileOperations([folderCreateOperation("${BUILD_DIR}/${BUILD_PLATFORM}")])
+						}
+						stage('Build: Windows') {
+							env.BUILD_PLATFORM = "Windows Desktop"
 							
-								catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-									callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \"${BUILD_DIR}/${BUILD_PLATFORM}/${BUILD_NAME}.exe\""
-								}
-								
-								zip(zipFile: "${BUILD_HOST} - ${BUILD_NAME} - ${BUILD_PLATFORM}.zip", dir: "${BUILD_DIR}/${BUILD_PLATFORM}", archive: true, overwrite: true)
+							fileOperations([folderCreateOperation("${BUILD_DIR}/${BUILD_PLATFORM}")])
+						
+							catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+								callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \"${BUILD_DIR}/${BUILD_PLATFORM}/${BUILD_NAME}.exe\""
 							}
-							stage('Build: Linux') {
-								env.BUILD_PLATFORM = "Linux"
-								
-								fileOperations([folderCreateOperation("${BUILD_DIR}/${BUILD_PLATFORM}")])
 							
-								catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-									callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \"${BUILD_DIR}/${BUILD_PLATFORM}/${BUILD_NAME}.exe\""
-								}
-								
-								zip(zipFile: "${BUILD_HOST} - ${BUILD_NAME} - ${BUILD_PLATFORM}.zip", dir: "${BUILD_DIR}/${BUILD_PLATFORM}", archive: true, overwrite: true)
-							}
-							stage('Build: MacOS') {
-								env.BUILD_PLATFORM = "macOS"
-								
-								fileOperations([folderCreateOperation("${BUILD_DIR}/${BUILD_PLATFORM}")])
+							zip(zipFile: "${BUILD_HOST} - ${BUILD_NAME} - ${BUILD_PLATFORM}.zip", dir: "${BUILD_DIR}/${BUILD_PLATFORM}", archive: true, overwrite: true)
+						}
+						stage('Build: Linux') {
+							env.BUILD_PLATFORM = "Linux"
 							
-								catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-									callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \"${BUILD_DIR}/${BUILD_PLATFORM}/${BUILD_NAME}.exe\""
-								}
-								
-								zip(zipFile: "${BUILD_HOST} - ${BUILD_NAME} - ${BUILD_PLATFORM}.zip", dir: "${BUILD_DIR}/${BUILD_PLATFORM}", archive: true, overwrite: true)
+							fileOperations([folderCreateOperation("${BUILD_DIR}/${BUILD_PLATFORM}")])
+						
+							catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+								callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \"${BUILD_DIR}/${BUILD_PLATFORM}/${BUILD_NAME}.exe\""
 							}
-							stage('Build: WebGL') {
-								env.BUILD_PLATFORM = "Web"
-								
-								fileOperations([folderCreateOperation("${BUILD_DIR}/${BUILD_PLATFORM}")])
 							
-								catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-									callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \"${BUILD_DIR}/${BUILD_PLATFORM}/${BUILD_NAME}.exe\""
-								}
-								
-								zip(zipFile: "${BUILD_HOST} - ${BUILD_NAME} - ${BUILD_PLATFORM}.zip", dir: "${BUILD_DIR}/${BUILD_PLATFORM}", archive: true, overwrite: true)
+							zip(zipFile: "${BUILD_HOST} - ${BUILD_NAME} - ${BUILD_PLATFORM}.zip", dir: "${BUILD_DIR}/${BUILD_PLATFORM}", archive: true, overwrite: true)
+						}
+						stage('Build: MacOS') {
+							env.BUILD_PLATFORM = "macOS"
+							
+							fileOperations([folderCreateOperation("${BUILD_DIR}/${BUILD_PLATFORM}")])
+						
+							catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+								callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \"${BUILD_DIR}/${BUILD_PLATFORM}/${BUILD_NAME}.exe\""
 							}
+							
+							zip(zipFile: "${BUILD_HOST} - ${BUILD_NAME} - ${BUILD_PLATFORM}.zip", dir: "${BUILD_DIR}/${BUILD_PLATFORM}", archive: true, overwrite: true)
+						}
+						stage('Build: WebGL') {
+							env.BUILD_PLATFORM = "Web"
+							
+							fileOperations([folderCreateOperation("${BUILD_DIR}/${BUILD_PLATFORM}")])
+						
+							catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+								callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \"${BUILD_DIR}/${BUILD_PLATFORM}/${BUILD_NAME}.exe\""
+							}
+							
+							zip(zipFile: "${BUILD_HOST} - ${BUILD_NAME} - ${BUILD_PLATFORM}.zip", dir: "${BUILD_DIR}/${BUILD_PLATFORM}", archive: true, overwrite: true)
 						}
 					}
                 }
