@@ -10,7 +10,7 @@ pipeline {
 		disableResume()
 	}
     stages {
-        stage('Setup') {
+        stage('Setup Agent') {
 			agent {
 				dockerfile {
 					filename '.jenkins/Dockerfile'					
