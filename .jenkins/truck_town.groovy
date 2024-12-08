@@ -15,7 +15,7 @@ pipeline {
         stage('Linux Host') {
 			agent {
 				docker {
-					image: 'barichello/godot-ci:4.3'
+					image 'barichello/godot-ci:4.3'
 				}
 			}
 			environment {
