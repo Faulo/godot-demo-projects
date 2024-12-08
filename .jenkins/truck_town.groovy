@@ -73,6 +73,7 @@ pipeline {
 					}
                 }
             }
+		}
         stage('Windows Host') {
 			agent {
 				label 'windows'
