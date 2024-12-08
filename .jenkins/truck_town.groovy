@@ -1,21 +1,20 @@
 pipeline {
-    agent none
     environment {
         GODOT_VERSION = '4.3'
         PROJECT_LOCATION = '3d/truck_town'
         BUILD_NAME = 'Truck Town'
     }
+	agent {
+		dockerfile {
+			filename '.jenkins/Dockerfile'					
+		}
+	}
 	options {
 		disableConcurrentBuilds()
 		disableResume()
 	}
     stages {
-        stage('Setup Agent') {
-			agent {
-				dockerfile {
-					filename '.jenkins/Dockerfile'					
-				}
-			}
+        stage("Run in: ${PROJECT_LOCATION}") {
             steps {
                 script {
                     dir(env.PROJECT_LOCATION) {		

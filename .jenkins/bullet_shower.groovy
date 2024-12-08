@@ -1,20 +1,20 @@
 pipeline {
-	agent {
-		dockerfile {
-			filename '.jenkins/Dockerfile'					
-		}
-	}
     environment {
         GODOT_VERSION = '4.2'
         PROJECT_LOCATION = '2d/bullet_shower'
         BUILD_NAME = 'Bullet Shower'
     }
+	agent {
+		dockerfile {
+			filename '.jenkins/Dockerfile'					
+		}
+	}
 	options {
 		disableConcurrentBuilds()
 		disableResume()
 	}
     stages {
-        stage('Setup Agent') {
+        stage("Run in: ${PROJECT_LOCATION}") {
             steps {
                 script {
                     dir(env.PROJECT_LOCATION) {		
