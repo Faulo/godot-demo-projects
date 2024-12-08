@@ -70,6 +70,17 @@ pipeline {
 							}
 							
 							zip(zipFile: "${BUILD_HOST} - ${BUILD_NAME} - ${BUILD_PLATFORM}.zip", dir: ".builds/${BUILD_PLATFORM}", archive: true, overwrite: true)
+							
+							publishHTML([
+								allowMissing: false,
+								alwaysLinkToLastBuild: false,
+								keepAll: false,
+								reportDir: ".builds/${BUILD_PLATFORM}",
+								reportFiles: "${BUILD_NAME}.html",
+								reportName: '${BUILD_HOST} - WebGL Build',
+								reportTitles: '',
+								useWrapperFileDirectly: true
+							])
 						}
 					}
                 }
@@ -133,6 +144,17 @@ pipeline {
                             }
                             
                             zip(zipFile: "${BUILD_HOST} - ${BUILD_NAME} - ${BUILD_PLATFORM}.zip", dir: ".builds/${BUILD_PLATFORM}", archive: true, overwrite: true)
+							
+							publishHTML([
+								allowMissing: false,
+								alwaysLinkToLastBuild: false,
+								keepAll: false,
+								reportDir: ".builds/${BUILD_PLATFORM}",
+								reportFiles: "${BUILD_NAME}.html",
+								reportName: '${BUILD_HOST} - WebGL Build',
+								reportTitles: '',
+								useWrapperFileDirectly: true
+							])
                         }
                     }
                 }
