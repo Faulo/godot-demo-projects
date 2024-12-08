@@ -14,7 +14,7 @@ pipeline {
 		disableResume()
 	}
     stages {
-        stage(env.PROJECT_LOCATION) {
+        stage("Declarative: Start Pipeline") {
             steps {
                 script {
                     dir(env.PROJECT_LOCATION) {		
