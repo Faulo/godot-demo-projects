@@ -5,8 +5,8 @@ pipeline {
 		BUILD_NAME = 'Bullet Shower'
 	}
 	agent {
-		dockerfile {
-			filename '.jenkins/Dockerfile'
+		docker {
+			image 'barichello/godot-ci:4.2'
 		}
 	}
 	options {

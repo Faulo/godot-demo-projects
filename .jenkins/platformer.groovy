@@ -5,8 +5,8 @@ pipeline {
 		BUILD_NAME = 'Platformer'
 	}
 	agent {
-		dockerfile {
-			filename '.jenkins/Dockerfile'
+		docker {
+			image 'barichello/godot-ci:4.3'
 		}
 	}
 	options {
