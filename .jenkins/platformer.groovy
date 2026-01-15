@@ -31,6 +31,7 @@ pipeline {
 							env.STEAM_DEPOT_WINDOWS = ''
 							env.STEAM_DEPOT_LINUX = ''
 							env.STEAM_DEPOT_MAC = ''
+							env.STEAM_BRANCH = env.BRANCH_NAME
 							break
 					}
 
@@ -143,7 +144,7 @@ def build() {
 
 		if (env.STEAM_ID && depots) {
 			stage('Deploy to: Steam') {
-				callUnity "steam-buildfile '${builds}' '${builds}' ${STEAM_ID} ${depots} $BRANCH_NAME", "${builds}/deploy-steam.vdf"
+				callUnity "steam-buildfile '${builds}' '${builds}' ${STEAM_ID} ${depots} $STEAM_BRANCH", "${builds}/deploy-steam.vdf"
 				withCredentials([
 					usernamePassword(credentialsId: env.STEAM_CREDENTIALS, usernameVariable: 'STEAM_CREDS_USR', passwordVariable: 'STEAM_CREDS_PSW')
 				]) {
