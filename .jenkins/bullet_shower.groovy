@@ -1,6 +1,6 @@
 pipeline {
 	environment {
-		GODOT_VERSION = '4.2'
+		GODOT_VERSION = '4.3'
 		PROJECT_LOCATION = '2d/bullet_shower'
 		BUILD_NAME = 'Bullet Shower'
 		BUILD_DIR = '.builds'
