@@ -36,6 +36,7 @@ pipeline {
 
 					if (isUnix()) {
 						docker.image("barichello/godot-ci:$GODOT_VERSION").inside {
+							callShell "apt update && apt install libfontconfig -y"
 							build()
 						}
 					} else{
