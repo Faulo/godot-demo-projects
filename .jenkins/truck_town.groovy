@@ -10,7 +10,7 @@ pipeline {
 		DISCORD_PING_IF = ''
 	}
 	agent {
-		label 'windows || linux'
+		label 'docker'
 	}
 	options {
 		disableConcurrentBuilds()
@@ -35,14 +35,9 @@ pipeline {
 							break
 					}
 
-					if (isUnix()) {
-						docker.image("barichello/godot-ci:$GODOT_VERSION").inside {
-							callShell "apt update && apt install libfontconfig -y"
-							build()
-						}
-					} else{
-						build()
-					}
+                    docker.image("faulo/godot").inside {
+                        build()
+                    }
 				}
 			}
 		}
