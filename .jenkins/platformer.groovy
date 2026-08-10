@@ -9,37 +9,19 @@ pipeline {
 		DISCORD_PING_USER = ''
 		DISCORD_PING_IF = ''
 	}
-	agent {
-		label 'docker'
-	}
+	agent none
 	options {
 		disableConcurrentBuilds()
 		disableResume()
 	}
 	stages {
-		stage("Declarative: Start Pipeline") {
-			steps {
-				script {
-					switch (env.BRANCH_NAME) {
-						default:
-							env.BUILD_PRESET_WINDOWS = 'Windows Desktop'
-							env.BUILD_PRESET_LINUX = 'Linux'
-							env.BUILD_PRESET_MAC = 'macOS'
-							env.BUILD_PRESET_WEBGL = 'Web'
-
-							env.STEAM_ID = ''
-							env.STEAM_DEPOT_WINDOWS = ''
-							env.STEAM_DEPOT_LINUX = ''
-							env.STEAM_DEPOT_MAC = ''
-							env.STEAM_BRANCH = env.BRANCH_NAME
-							break
-					}
-
-                    docker.image("faulo/godot").inside {
-                        build()
-                    }
-				}
-			}
+		stage('Linux') {
+			agent { label 'linux' }
+			steps { script { runBuildInImage() } }
+		}
+		stage('Windows') {
+			agent { label 'windows' }
+			steps { script { runBuildInImage() } }
 		}
 	}
 	post {
@@ -48,6 +30,25 @@ pipeline {
 				report()
 			}
 		}
+	}
+}
+
+def runBuildInImage() {
+	env.BUILD_PRESET_WINDOWS = 'Windows Desktop'
+	env.BUILD_PRESET_LINUX = 'Linux'
+	env.BUILD_PRESET_MAC = 'macOS'
+	env.BUILD_PRESET_WEBGL = 'Web'
+	env.STEAM_ID = ''
+	env.STEAM_DEPOT_WINDOWS = ''
+	env.STEAM_DEPOT_LINUX = ''
+	env.STEAM_DEPOT_MAC = ''
+	env.STEAM_BRANCH = env.BRANCH_NAME
+
+	def volumes = isUnix()
+		? '-v godot-binaries:/godot/binaries -v godot-templates:/godot/export_templates -v blender:/blender'
+		: '-v godot-binaries:C:/godot/binaries -v godot-templates:C:/godot/export_templates -v blender:C:/blender'
+	docker.image('faulo/godot').inside(volumes) {
+		build()
 	}
 }
 

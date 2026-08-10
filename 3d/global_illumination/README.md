@@ -12,6 +12,8 @@ Renderer: Forward+
 
 Check out this demo on the asset library: https://godotengine.org/asset-library/asset/2737
 
+The CI pipeline also imports the included `cube.blend` source directly to verify Godot's Blender importer on Linux and Windows.
+
 ## How does it work?
 
 A sphere and box are parented to the camera to showcase dynamic object lighting.
