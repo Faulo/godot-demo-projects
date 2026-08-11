@@ -29,6 +29,7 @@ pipeline {
                             false,
                             { String nodeName ->
                                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE', catchInterruptions: false) {
+                                    checkout scm
                                     runBuildInImage()
                                 }
                             }
