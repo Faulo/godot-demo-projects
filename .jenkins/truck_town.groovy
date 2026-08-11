@@ -49,9 +49,6 @@ def runBuildInImage() {
 		: '-v godot-binaries:C:/godot/binaries -v godot-templates:C:/godot/export_templates -v blender:C:/blender'
 	def image = docker.image('faulo/godot')
 	image.pull()
-	if (!isUnix()) {
-		bat 'icacls "%WORKSPACE%" /grant "*S-1-1-0:(OI)(CI)F" /T /C'
-	}
 	image.inside(volumes) {
 		build()
 	}
