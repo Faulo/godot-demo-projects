@@ -34,17 +34,18 @@ pipeline {
 }
 
 def runBuildInImage() {
+	def unix = isUnix()
 	env.BUILD_PRESET_WINDOWS = 'Windows Desktop'
-	env.BUILD_PRESET_LINUX = 'Linux'
-	env.BUILD_PRESET_MAC = 'macOS'
-	env.BUILD_PRESET_WEBGL = 'Web'
+	env.BUILD_PRESET_LINUX = unix ? 'Linux' : ''
+	env.BUILD_PRESET_MAC = unix ? 'macOS' : ''
+	env.BUILD_PRESET_WEBGL = unix ? 'Web' : ''
 	env.STEAM_ID = ''
 	env.STEAM_DEPOT_WINDOWS = ''
 	env.STEAM_DEPOT_LINUX = ''
 	env.STEAM_DEPOT_MAC = ''
 	env.STEAM_BRANCH = env.BRANCH_NAME
 
-	def volumes = isUnix()
+	def volumes = unix
 		? '-v godot-binaries:/godot/binaries -v godot-templates:/godot/export_templates -v blender:/blender'
 		: '-v godot-binaries:C:/godot/binaries -v godot-templates:C:/godot/export_templates -v blender:C:/blender'
 	def image = docker.image('faulo/godot')
