@@ -20,7 +20,7 @@ pipeline {
 			steps { script { runBuildInImage() } }
 		}
 		stage('Windows') {
-			agent { label 'Dende (Unity)' }
+			agent { label 'windows' }
 			steps { script { runBuildInImage() } }
 		}
 	}
