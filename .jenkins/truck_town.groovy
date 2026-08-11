@@ -71,6 +71,7 @@ def runBuildInImage() {
 def build() {
     dir(env.PROJECT_LOCATION) {
         def builds = "$WORKSPACE/$PROJECT_LOCATION/$BUILD_DIR"
+        fileOperations([folderDeleteOperation(BUILD_DIR)])
 
         def depots = ''
 
