@@ -20,12 +20,7 @@ pipeline {
 			steps { script { runBuildInImage() } }
 		}
 		stage('Windows') {
-			agent {
-				node {
-					label 'Dende (Unity)'
-					customWorkspace 'C:\\Windows\\Temp\\jenkins-godot\\platformer'
-				}
-			}
+			agent { label 'Dende (Unity)' }
 			steps { script { runBuildInImage() } }
 		}
 	}
