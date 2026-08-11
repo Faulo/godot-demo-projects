@@ -94,7 +94,7 @@ def build() {
 
                 fileOperations([folderCreateOperation("${builds}/${BUILD_PLATFORM}")])
 
-                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE', catchInterruptions: false) {
                     callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \"${builds}/${BUILD_PLATFORM}/${BUILD_NAME}.exe\""
                 }
 
@@ -110,7 +110,7 @@ def build() {
 
                 fileOperations([folderCreateOperation("${builds}/${BUILD_PLATFORM}")])
 
-                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE', catchInterruptions: false) {
                     callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \"${builds}/${BUILD_PLATFORM}/${BUILD_NAME}.x86_64\""
                 }
 
@@ -127,7 +127,7 @@ def build() {
 
                 fileOperations([folderCreateOperation("${builds}/${BUILD_PLATFORM}")])
 
-                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE', catchInterruptions: false) {
                     callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \"${builds}/${BUILD_PLATFORM}/${BUILD_NAME} - ${BUILD_PLATFORM}.zip\""
                 }
 
@@ -143,7 +143,7 @@ def build() {
 
                 fileOperations([folderCreateOperation("${builds}/${BUILD_PLATFORM}")])
 
-                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE', catchInterruptions: false) {
                     callShell "godot --headless --verbose --quit --export-debug \"${BUILD_PLATFORM}\" \"${builds}/${BUILD_PLATFORM}/${BUILD_NAME}.html\""
                 }
 
