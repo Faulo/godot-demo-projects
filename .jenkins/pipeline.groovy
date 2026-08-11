@@ -12,7 +12,7 @@ def runBuildPipeline() {
                             return false
                         }
                         def labels = node.getLabelString().tokenize(' ')
-                        return labels.contains('docker')
+                        return labels.contains('docker') && labels.contains('gpu')
                     },
                     false,
                     { String nodeName ->
