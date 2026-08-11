@@ -16,11 +16,11 @@ pipeline {
 	}
 	stages {
 		stage('Linux') {
-			agent { label 'linux' }
+			agent { label 'linux && docker' }
 			steps { script { runBuildInImage() } }
 		}
 		stage('Windows') {
-			agent { label 'windows' }
+			agent { label 'windows && docker' }
 			steps { script { runBuildInImage() } }
 		}
 	}
