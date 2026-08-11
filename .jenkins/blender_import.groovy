@@ -25,7 +25,9 @@ def importBlenderAsset() {
 	def volumes = isUnix()
 		? '-v godot-binaries:/godot/binaries -v godot-templates:/godot/export_templates -v blender:/blender'
 		: '-v godot-binaries:C:/godot/binaries -v godot-templates:C:/godot/export_templates -v blender:C:/blender'
-	docker.image('faulo/godot').inside(volumes) {
+	def image = docker.image('faulo/godot')
+	image.pull()
+	image.inside(volumes) {
 		dir(env.PROJECT_LOCATION) {
 			fileOperations([folderDeleteOperation('.godot')])
 			callShell 'godot --headless --verbose --quit --editor --import'
