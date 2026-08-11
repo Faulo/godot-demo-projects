@@ -15,7 +15,12 @@ pipeline {
 			steps { script { importBlenderAsset() } }
 		}
 		stage('Windows') {
-			agent { label 'Dende (Unity)' }
+			agent {
+				node {
+					label 'Dende (Unity)'
+					customWorkspace 'C:\\Windows\\Temp\\jenkins-godot\\blender-import'
+				}
+			}
 			steps { script { importBlenderAsset() } }
 		}
 	}

@@ -20,7 +20,12 @@ pipeline {
 			steps { script { runBuildInImage() } }
 		}
 		stage('Windows') {
-			agent { label 'Dende (Unity)' }
+			agent {
+				node {
+					label 'Dende (Unity)'
+					customWorkspace 'C:\\Windows\\Temp\\jenkins-godot\\bullet-shower'
+				}
+			}
 			steps { script { runBuildInImage() } }
 		}
 	}
