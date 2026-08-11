@@ -15,7 +15,7 @@ pipeline {
 			steps { script { importBlenderAsset() } }
 		}
 		stage('Windows') {
-			agent { label 'windows' }
+			agent { label 'Dende (Unity)' }
 			steps { script { importBlenderAsset() } }
 		}
 	}
