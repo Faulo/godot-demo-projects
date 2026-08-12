@@ -40,18 +40,18 @@ def runBuildInImage() {
     env.STEAM_DEPOT_MAC = ''
     env.STEAM_BRANCH = env.BRANCH_NAME
 
-    def volumes = dockerVolumes()
+    def arguments = dockerArguments()
     def image = docker.image('faulo/godot')
     image.pull()
-    image.inside(volumes) {
+    image.inside(arguments) {
         build()
     }
 }
 
-def dockerVolumes() {
+def dockerArguments() {
     return isUnix()
-            ? '-v godot-binaries:/godot/binaries -v godot-templates:/godot/export_templates -v blender:/blender'
-            : '-v godot-binaries:C:/godot/binaries -v godot-templates:C:/godot/export_templates -v blender:C:/blender'
+            ? '--gpus all --env NVIDIA_DRIVER_CAPABILITIES=all -v godot-binaries:/godot/binaries -v godot-templates:/godot/export_templates -v blender:/blender'
+            : '--device class/5B45201D-F2F2-4F3B-85BB-30FF1F953599 -v godot-binaries:C:/godot/binaries -v godot-templates:C:/godot/export_templates -v blender:C:/blender'
 }
 
 def build() {
